@@ -4,12 +4,18 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky install"
   },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^17.0.19",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.4",
     "prettier": "^2.5.1",
     "typescript": "^4.5.5"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "prettier --write"
   }
 }
