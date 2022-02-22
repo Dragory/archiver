@@ -1,9 +1,13 @@
 {
   "name": "@mivir/archiver",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^17.0.19",
+    "typescript": "^4.5.5"
+  }
 }
