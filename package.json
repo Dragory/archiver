@@ -5,12 +5,13 @@
   "scripts": {
     "build": "tsc",
     "format": "prettier --write .",
-    "watch": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "watch": "cross-env NODE_ENV=development tsc-watch --onSuccess \"node dist/index.js\"",
     "prepare": "husky install"
   },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^17.0.19",
+    "discord-api-types": "^0.27.2",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
     "prettier": "^2.5.1",
@@ -19,5 +20,11 @@
   },
   "lint-staged": {
     "*.{js,ts}": "prettier --write"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^0.3.0",
+    "cross-env": "^7.0.3",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0"
   }
 }
