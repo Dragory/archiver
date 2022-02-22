@@ -8,6 +8,7 @@ import {
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { ApplicationCommandTypes } from "discord.js/typings/enums.js";
+import { omit } from "./utils/omit.js";
 
 export type Command = ChatInputApplicationCommandData & {
   handler: (interaction: CommandInteraction) => void;
@@ -32,10 +33,7 @@ export async function registerCommands(client: Client, rest: REST, commands: Com
  * Create/update application command metadata through the API
  */
 async function updateDiscordCommands(clientId: string, rest: REST, commands: Command[]): Promise<void> {
-  const commandsToAdd: ChatInputApplicationCommandData[] = commands.map((cmd) => ({
-    ...cmd,
-    handler: undefined,
-  }));
+  const commandsToAdd: ChatInputApplicationCommandData[] = commands.map((cmd) => omit(cmd, ["handler"]));
 
   if (process.env.NODE_ENV === "development") {
     console.log("Registering guild commands for development");

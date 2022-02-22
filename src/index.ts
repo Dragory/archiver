@@ -16,7 +16,7 @@ const commandsToRegister = [
 ];
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILD_MESSAGES],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 const rest = new REST({ version: "9" }).setToken(TOKEN);
 
