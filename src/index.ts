@@ -10,6 +10,11 @@ if (!TOKEN) {
   process.exit(1);
 }
 
+// prettier-ignore
+const commandsToRegister = [
+  archiveCommand,
+];
+
 const client = new Client({
   intents: [Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -17,7 +22,7 @@ const rest = new REST({ version: "9" }).setToken(TOKEN);
 
 client.once("ready", async () => {
   console.log('Received "ready" event, registering commands');
-  await registerCommands(client, rest, [archiveCommand]);
+  await registerCommands(client, rest, commandsToRegister);
   console.log("Commands registered, listening to commands");
 });
 
