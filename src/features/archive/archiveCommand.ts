@@ -1,44 +1,17 @@
-import { typedCommand } from "../commands.js";
+import { typedCommand } from "../../commands.js";
 import { MessageButtonStyles, MessageComponentTypes } from "discord.js/typings/enums.js";
-import { GuildChannel, Message, MessageAttachment, Permissions, TextChannel, User } from "discord.js";
-import { createMessageComponent } from "../messageComponents.js";
+import { Permissions, TextChannel } from "discord.js";
+import { createMessageComponent } from "../../messageComponents.js";
 import { join as joinPath } from "path";
-import { mkdir, writeFile, rm } from "fs/promises";
-import { pipeline } from "stream";
-import { promisify } from "util";
-import fetch from "node-fetch";
-import { createWriteStream } from "fs";
+import { mkdir, rm, writeFile } from "fs/promises";
 import { format as formatDate } from "date-fns";
-
-const streamPipeline = promisify(pipeline);
+import { ArchiveData, ArchivedMessage, ArchivedUser } from "./types.js";
+import { downloadFile } from "./downloadFile.js";
 
 const ARCHIVAL_BATCH_SIZE = 50;
 const REPORTING_INTERVAL = 200;
 
-type ArchivedChannel = Pick<GuildChannel, "id" | "name">;
-
-type ArchivedUser = Pick<User, "id" | "username" | "discriminator">;
-
-type ArchivedMessage = Pick<Message, "id" | "content"> & {
-  userId: string;
-  attachments?: Array<Pick<MessageAttachment, "id" | "contentType">>;
-};
-
-type ArchiveData = {
-  channel: ArchivedChannel;
-  users: ArchivedUser[];
-  messages: ArchivedMessage[];
-};
-
 const archivalProcesses = new Set<string>();
-
-const downloadFile = async (url: string, path: string): Promise<void> => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Error while downloading file: ${response.statusText}`);
-  }
-  await streamPipeline(response.body!, createWriteStream(path));
-};
 
 export const archiveCommand = typedCommand({
   name: "archive",

@@ -2,7 +2,7 @@ import "dotenv/config";
 import { Client, Intents } from "discord.js";
 import { REST } from "@discordjs/rest";
 import { registerCommands } from "./commands.js";
-import { archiveCommand } from "./commands/archiveCommand.js";
+import { archiveCommand } from "./features/archive/archiveCommand.js";
 
 const TOKEN = process.env.TOKEN;
 if (!TOKEN) {
